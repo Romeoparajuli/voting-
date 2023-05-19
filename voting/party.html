@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote for Your Favorite Party</title>
+ <style>h1 {
+    text-align: center;
+}
+
+#partyContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.partyButton {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.partyButton:hover {
+    background-color: #45a049;
+}
+
+#resultContainer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#resultText {
+    font-size: 24px;
+    color: #4CAF50;
+}
+</style>
+</head>
+<body>
+    <h1>Vote for Your Favorite Party</h1>
+
+    <div id="partyContainer">
+        <button class="partyButton" onclick="vote('party1')">Party 1</button>
+        <button class="partyButton" onclick="vote('party2')">Party 2</button>
+        <button class="partyButton" onclick="vote('party3')">Party 3</button>
+        <button class="partyButton" onclick="vote('party4')">Party 4</button>
+    </div>
+
+    <div id="resultContainer">
+        <h2 id="resultText">Vote Result</h2>
+        <table id="voteTable">
+            <tr>
+                <th>Party</th>
+                <th>Votes</th>
+            </tr>
+        </table>
+    </div>
+
+    <script >
+        var partyVotes = {
+            party1: 0,
+            party2: 0,
+            party3: 0,
+            party4: 0
+        };
+        
+        var hasVoted = false; // Variable to track if user has voted
+        
+        function vote(party) {
+            if (!hasVoted) {
+                partyVotes[party]++;
+        
+                var resultText = document.getElementById("resultText");
+                resultText.textContent = "You voted for " + party + "!";
+        
+                updateVoteCounts();
+        
+                hasVoted = true; // Set hasVoted to true to prevent further voting
+            } else {
+                alert("You have already voted!");
+            }
+        }
+        
+        function updateVoteCounts() {
+            var voteTable = document.getElementById("voteTable");
+            voteTable.innerHTML = ""; // Clear the table
+        
+            for (var party in partyVotes) {
+                if (partyVotes.hasOwnProperty(party)) {
+                    var votes = partyVotes[party];
+        
+                    var newRow = document.createElement("tr");
+        
+                    var partyCell = document.createElement("td");
+                    partyCell.textContent = party;
+                    newRow.appendChild(partyCell);
+        
+                    var votesCell = document.createElement("td");
+                    votesCell.textContent = votes;
+                    newRow.appendChild(votesCell);
+        
+                    voteTable.appendChild(newRow);
+                }
+            }
+        }
+         </script>
+</body>
+</html>
